@@ -76,6 +76,11 @@ public class MatrixNotLabeled implements Matrix{
 		
 	}
 	
+	@Override	
+	public String[][] getMatrix() {
+		return matrix;
+	}
+	
 	//imprime a matriz
 	protected boolean printer() {
         System.out.println("\n Your adjacency matrix: \n");

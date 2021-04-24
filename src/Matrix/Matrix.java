@@ -18,4 +18,7 @@ public interface Matrix{
 	//preenche a matriz de valores vazios
 	public void fill(String string);
 	
+	//Devolve uma matrix em formato de String
+	public String[][] getMatrix();
+	
 }
