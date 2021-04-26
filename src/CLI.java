@@ -75,7 +75,7 @@ public class CLI {
 			case "EDGE":
 				return createEdge(code);
 			case "E":
-				return createVertex(code);
+				return createEdge(code);
 			default:
 				return false;
 			}
@@ -116,10 +116,15 @@ public class CLI {
 	private boolean help() {
 		System.out.println(
 				"HELP - Give this help.\n\n" + "CREATE COMMAND:\n\n" + "CREATE WITH_LABEL to create a labeled graph.\n"
-						+ "CREATE NO_LABEL to create a not labeled graph.\n" + "ADD COMMAND:\n\n"
+						+ "CREATE NO_LABEL to create a not labeled graph.\n" 
+						+ "CREATE NO_LABEL_UNDIRECTED to create a not labeled graph undirected.\n"
+						+ "\nADD COMMAND:\n\n"
 						+ "ADD VERTEX 1 to implement a vertex, or ADD VERTEX A to implement a labeled vertex.\n"
 						+ "ADD EDGE 1 2 to implement a edge between VERTEX 1 and 2, \n"
 						+ "or ADD VERTEX 1 2 A to implement a labeled edge between VERTEX 1 and 2.\n"
+						+ "\nCOUNT COMMAND:\n\n"
+						+ "COUNT CYCLES to show all cycles in graph with any size.\n"
+						+ "COUNT CYCLES 4 to show all cycles in graph with 4 vertex size.\n"
 						+ "PRINT COMMAND:\n\n" + "Print your graph.\n");
 		return true;
 	}

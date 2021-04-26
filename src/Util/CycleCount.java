@@ -23,12 +23,8 @@ public class CycleCount {
 		for (int i = 0; i < vertexCount; i++)
 			if (!marked[i] && graph[vert][i] == 1)
 
-				// DFS for searching path by
-				// decreasing length by 1
 				DFS(graph, marked, n - 1, i, start);
 
-		// marking vert as unvisited to make it
-		// usable again
 		marked[vert] = false;
 	}
 
