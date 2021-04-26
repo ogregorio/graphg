@@ -41,7 +41,7 @@ graphg >> ADD EDGE VERTEX1 VERTEX2
 ```
 
 #### With labels ####
-(*just work with CREATE WITH_LABEL*)
+(*just work with WITH_LABEL graphs*)
 
 Type:
 
