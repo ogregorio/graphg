@@ -1,7 +1,14 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import Matrix.*;
+import Util.BurnPGM;
 import Util.CycleCount;
+import Util.MinCut;
+import Util.PGMGraph;
+import Util.PGMHightlightBackgroundAlt;
+import Util.PGMMatrix;
 
 public class CLI {
 
@@ -50,6 +57,12 @@ public class CLI {
 			return matrixCreate(code[1]);
 		case "ADD":
 			return commandsDecode(code);
+		case "PGM":
+			return pgmMatrix(code[1], code[2]);
+		case "PGMDEMO":
+			return pgmDemo();
+		case "PGMALT":
+			return pgmHightlightBackground(code[1],code[2]);
 		case "PRINT":
 			return matrix.print();
 		case "COUNT":
@@ -125,6 +138,10 @@ public class CLI {
 						+ "\nCOUNT COMMAND:\n\n"
 						+ "COUNT CYCLES to show all cycles in graph with any size.\n"
 						+ "COUNT CYCLES 4 to show all cycles in graph with 4 vertex size.\n"
+						+ "\nPGM COMMAND:\n\n"
+						+ "PGM /origin_source /destiny_source."
+						+ "PGMALT /origin_source /destiny_source."
+						+ "PGMDEMO start a demo of PGM implementation."
 						+ "PRINT COMMAND:\n\n" + "Print your graph.\n");
 		return true;
 	}
@@ -160,6 +177,57 @@ public class CLI {
 		default:
 			return false;
 		}
+	}
+
+	private boolean pgmMatrix(String... type){
+		String source = type[0];
+		String destiny = type[1];
+
+		System.out.println("Your selected image is: " + source);
+		
+		MinCut minCut = new MinCut();
+		PGMMatrix pgmMatrix = new PGMMatrix(source);
+
+		PGMGraph pgmGraph = new PGMGraph(pgmMatrix);
+		int[][] segmentedMatrix = pgmGraph.cut(minCut.minCut(pgmGraph.getGraph(), pgmGraph.size, pgmGraph.size +1));
+
+		BurnPGM bpmg = new BurnPGM();
+
+		bpmg.burn(destiny, pgmMatrix, segmentedMatrix);
+
+		System.out.println("Your processed image is in: " + destiny);
+
+		return true;
+
+	}
+
+	private boolean pgmHightlightBackground(String... type){
+		String source = type[0];
+		String destiny = type[1];
+
+		System.out.println("Your selected image is: " + source);
+		
+		PGMHightlightBackgroundAlt pgmHBA = new PGMHightlightBackgroundAlt();
+		PGMMatrix pgmMatrix = pgmHBA.highlightBackground(new PGMMatrix(source));
+
+		BurnPGM bpmg = new BurnPGM();
+		bpmg.burn(destiny, pgmMatrix, pgmMatrix.getMatrix());
+
+		System.out.println("Your processed image is in: " + destiny);
+
+		return true;
+	}
+
+	private boolean pgmDemo(){
+		String source = new File("silvio.pgm").getAbsolutePath();		
+
+		System.out.println("Segmenting background from image in two diferent methods:");
+		System.out.println("First method: network flow and min cut.");
+		pgmMatrix(source, new File("silvio_flow.pgm").getAbsolutePath());
+		System.out.println("Second method: imperative ( procedural ) mode.");
+		pgmHightlightBackground(source, new File("silvio_highlight.pgm").getAbsolutePath());
+		
+		return true;
 	}
 
 }

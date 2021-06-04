@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class MatrixLabeled implements Matrix{
 	
-	//Usso esse arraylist para guardar os vetores já usados
+	//Uso esse arraylist para guardar os vetores já usados
 	private ArrayList<String> addedVertex = new ArrayList<String>();
 	
-	//definição da matriz de adjacência
+	//Definição da matriz de adjacência
 	private String[][] matrix;
 	
 	public MatrixLabeled() {

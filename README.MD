@@ -82,8 +82,30 @@ ___
 Type:
 
 to print graph in display
-
+****
 
 ```shell
 graphg >> PRINT
+```
+
+## PGM command ##
+
+Type:
+
+to segment the background/foreground of an image using network flow graph and min cut
+
+``` shell
+graphg >> PGM /origin_source /destiny_source.
+```
+
+to segment the background/foreground of an image using imperative method
+
+``` shell
+graphg >> PGMALT /origin_source /destiny_source
+```
+
+image background/foreground segmentation demo - runs the two methods above in an example image
+
+``` shell
+graphg >> PGMDEMO
 ```
