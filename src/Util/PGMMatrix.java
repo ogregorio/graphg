@@ -25,6 +25,14 @@ public class PGMMatrix {
         
     }
 
+    public PGMMatrix(int[][] matrix, String format, String name, int maxSize, int[] dimensions) {
+        this.matrix = matrix;
+        this.format = format;
+        this.name = name;
+        this.maxSize = maxSize;
+        this.dimensions = dimensions;
+    }
+
     private void readPGM(String path) throws FileNotFoundException {
         File file = new File(path);
         Scanner scanner = new Scanner(file);
@@ -82,12 +90,24 @@ public class PGMMatrix {
         return this.maxSize;
     }
 
+    public int[] getDimensions() {
+        return this.dimensions;
+    }
+
     public int getLenght() {
         return this.dimensions[1];
     }
 
     public int getHeight() {
         return this.dimensions[0];
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getFormat() {
+        return this.format;
     }
 
 }

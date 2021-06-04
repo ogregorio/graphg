@@ -7,7 +7,7 @@ public class PGMGraph {
 
   PGMMatrix pgmMatrix;
   private int[][] matrix;
-  private int size;
+  public int size;
 
   public PGMGraph(PGMMatrix pgmMatrix) {
     this.pgmMatrix = pgmMatrix;
@@ -23,43 +23,38 @@ public class PGMGraph {
   }
 
   public int boundaryPenalty(int ip, int iq) {
-    int bp = (int) (100 * Math.exp(-Math.pow(ip - iq, 2) / (2 * Math.pow(30, 2))));
-    return bp;
+    return (int) (100 * Math.exp(-Math.pow(ip - iq, 2) / (2 * Math.pow(30, 2))));
   }
 
   public void getMatrix(int[] pixels, int tlink, int nlink) {
     int k = Integer.MIN_VALUE;
-    for (int i = 0; i < pixels.length; i++) {
-      try {
-        if (i % this.pgmMatrix.getLenght() != 0) {
-          int bp = boundaryPenalty(pixels[i], pixels[i + 1]);
-          this.matrix[i][i + 1] = bp;
-          this.matrix[i + 1][i] = bp;
-          k = Math.max(bp, k);
-        }
+    for (int i = 0; i < pixels.length - 1; i++) {
+      if (i + 1 % this.pgmMatrix.getLenght() != 0) {
+        int bp = boundaryPenalty(pixels[i], pixels[i + 1]);
+        this.matrix[i][i + 1] = bp;
+        this.matrix[i + 1][i] = bp;
+        k = Math.max(bp, k);
+      }
 
-        if (i - 1 % this.pgmMatrix.getLenght() == 0) {
-          int bp = boundaryPenalty(pixels[i], pixels[i - 1]);
-          this.matrix[i][i - 1] = bp;
-          this.matrix[i - 1][i] = bp;
-          k = Math.max(bp, k);
-        }
+      if (i - 1 % this.pgmMatrix.getLenght() == 0) {
+        int bp = boundaryPenalty(pixels[i], pixels[i - 1]);
+        this.matrix[i][i - 1] = bp;
+        this.matrix[i - 1][i] = bp;
+        k = Math.max(bp, k);
+      }
 
-        if (i + 1 <= pixels.length) {
-          int bp = boundaryPenalty(pixels[i + 1], pixels[i]);
-          this.matrix[i + 1][i] = bp;
-          this.matrix[i][i + 1] = bp;
-          k = Math.max(bp, k);
-        }
+      if (i + 1 <= this.pgmMatrix.getHeight()) {
+        int bp = boundaryPenalty(pixels[i + 1], pixels[i]);
+        this.matrix[i + 1][i] = bp;
+        this.matrix[i][i + 1] = bp;
+        k = Math.max(bp, k);
+      }
 
-        if (i + 1 >= pixels.length) {
-          int bp = boundaryPenalty(pixels[i - 1], pixels[i]);
-          this.matrix[i - 1][i] = bp;
-          this.matrix[i][i - 1] = bp;
-          k = Math.max(bp, k);
-        }
-
-      } catch (IndexOutOfBoundsException e) {
+      if (i - 1 >= this.pgmMatrix.getHeight()) {
+        int bp = boundaryPenalty(pixels[i - 1], pixels[i]);
+        this.matrix[i - 1][i] = bp;
+        this.matrix[i][i - 1] = bp;
+        k = Math.max(bp, k);
       }
     }
     for (int i = 0; i < pixels.length; i++) {
@@ -87,11 +82,11 @@ public class PGMGraph {
           y = (int) list.get(i) / pgmMatrix.getLenght();
           cutMatrix[x][y] = 99;
         }
-      } catch (ArrayIndexOutOfBoundsException e) {
-
+      } catch (Exception e) {
       }
     }
 
     return cutMatrix;
   }
+
 }

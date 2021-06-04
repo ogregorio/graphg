@@ -105,7 +105,7 @@ public class MinCut {
             for (int j = 0; j < graph.length; j++) {
                 if (graph[i][j] > 0 && isVisited[i] && !isVisited[j]) {
                     if (!cuts.containsKey(i)) {
-                        cuts.put(i, new ArrayList());
+                        cuts.put(i, new ArrayList<Integer>());
                     }
                     cuts.get(i).add(j);
                 }
